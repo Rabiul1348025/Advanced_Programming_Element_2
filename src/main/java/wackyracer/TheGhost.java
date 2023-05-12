@@ -9,9 +9,11 @@ import javax.swing.JFrame;
 public class TheGhost extends WackyCharacter implements SpecialPower {
 
     private boolean isVisible = false;
+    public String name="TheGhost";
     
     public TheGhost(int x, int y, int width, int height, String imagePath, Color characterColor, int speed) {
         super(x, y, width, height, imagePath, characterColor, speed);
+        super.setName(name);
     }
     
     @Override

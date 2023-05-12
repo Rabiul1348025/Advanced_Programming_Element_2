@@ -17,6 +17,7 @@ public class WackyCharacter implements Observer {
     private int width;
     private int height;
     private BufferedImage image;
+    private String name;
     private Color characterColor;
     private int speed;
 
@@ -41,6 +42,14 @@ public class WackyCharacter implements Observer {
 
     public void move() {
         x -= speed;
+    }
+    
+    public String getName(){
+        return name;
+    }
+    
+    public void setName(String na){
+        name=na;
     }
 
     public int getX() {

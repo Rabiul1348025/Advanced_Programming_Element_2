@@ -1,119 +1,123 @@
 package wackyracer;
 
-import java.awt.BorderLayout;
+import 
+        javax.swing.JButton;
+
+import 
+        javax.swing.JFrame;
+
+import 
+        java.awt.BorderLayout;
+
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+
+import 
+        java.awt.event.ActionEvent;
 
 public class WackyRacer {
+    
+    public static String imagePath[] = 
+    {
+    "images/speeder.png",//Teleporter
+    "images/wiz.png",//Dragon
+    "images/hk.png",//Hulk
+    "images/shrinkk.png",//Flash
+    "images/shil.png",//Freezer
+    "images/rs.png",//Rocket
+    "images/tr.png", //Inverter
+    "images/turtle.png",//Shield
+    "images/tk.png",//Topler
+    "images/shifter.png"//Ghost
+    };
 
-    public static void main(String[] args) {
+    public static int speed[] =
+    {
+    8,
+    8,
+    12,
+    8,
+    8,
+    8,
+    8, 
+    8,
+    8,
+    8//----------------  Ghost -------------------------//10
+    };
+    
+    public static void main(String args[]){
+        
     JFrame frame = new JFrame("Wacky Racer Game");
-
-    // Set the size of the frame to fullscreen
+    //-------- Set the size of the frame to fullscreen ----------//
+    
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     frame.setResizable(false);
     frame.setLocationRelativeTo(null);
 
-    // Create a new RaceTrack object
+    //--------------- Create a new RaceTrack object ------------//
     RaceTrack track = new RaceTrack();
 
-    // Create characters
+    //-------------- Create characters-------------------------
     createCharacters(track);
 
-    // Add the race track to the frame
-    frame.add(track);
-//    track.startRace();
-    
-    // Add a start button
+    //------------ Add a start and init button------------------//
     JButton startButton = new JButton("Start");
+    JButton stopButton = new JButton("Stop");
+    
+    startButton.setVisible(true);
+    stopButton.setEnabled(false);
+    
+    //----------------Add a actionlister to button-----------//
     startButton.addActionListener((ActionEvent e) -> {
         track.startRace();
+        
+        startButton.setVisible(false);
+        stopButton.setEnabled(true);
     });
-    frame.add(startButton, BorderLayout.NORTH);
-//
-//    // Add a stop button
-//    JButton stopButton = new JButton("Stop");
-//    stopButton.addActionListener((ActionEvent e) -> {
-//        track.stopRace();
-//    });
-//    frame.add(stopButton, BorderLayout.SOUTH);
+    
+    stopButton.addActionListener((ActionEvent e) -> {
+        track.stopRace();
+        initPlayers(track);
+        
+        startButton.setVisible(true);
+        stopButton.setEnabled(false);
+    });
+    
+    frame.
+            add(startButton, 
+            BorderLayout.NORTH);
+    frame.
+            add(stopButton, 
+            BorderLayout.SOUTH);
+    
+    frame.add(track);
 
-    // Make the frame visible
-    frame.setVisible(true);
+    frame.
+            setVisible(true);
 }
 
-
-
-    private static void createCharacters(RaceTrack track) {
-        // Create a new Character object and add it to the race track
-        String imagePath = "images/speeder.png";
-        int speed = 15;
-        //add teleporter
-        track.addCharacter(new TheTeleporter(JFrame.MAXIMIZED_HORIZ, 520, 100, 80, 
-                imagePath, Color.BLUE, speed));
+    private static void initPlayers(RaceTrack track){
+        WackyCharacter character;
+        int y=1000;
         
-//        //add TheWizard
-        imagePath = "images/wiz.png";
-        speed = 12;
-        track.addCharacter(new TheWizard(JFrame.MAXIMIZED_HORIZ, 600, 150, 180, 
-                imagePath, Color.WHITE, speed));
-//        
-//         //add TheHulk
-        imagePath = "images/hk.png";
-        speed = 2;
-        track.addCharacter(new TheHulk(-JFrame.MAXIMIZED_HORIZ, 400, 200, 100, 
-                imagePath, Color.WHITE, speed));
-//        
-//        
-//        //add TheFlash
-        imagePath = "images/shrinkk.png";
-        speed = 20;
-        track.addCharacter(new TheFlash(JFrame.MAXIMIZED_HORIZ +50, 300, 100, 80, 
-                imagePath, Color.WHITE, speed));
-//        
-//        //add TheFreezer
-        imagePath = "images/shil.png";
-        speed = 7;
-        track.addCharacter(new TheFreezer(JFrame.MAXIMIZED_HORIZ, 270, 150, 120, 
-                imagePath, Color.WHITE, speed));
-//        
-//        //add TheRocket
-        imagePath = "images/rs.png";
-        speed = 15;
-        track.addCharacter(new TheRocket(JFrame.MAXIMIZED_HORIZ +600, 650, 150, 120, 
-                imagePath, Color.WHITE, speed));
-//        
-//        //add TheTopler
-        imagePath = "images/topler.png";
-        speed = 12;
-        track.addCharacter(new TheTopler(JFrame.MAXIMIZED_HORIZ +780, 190, 250, 120, 
-                imagePath, Color.WHITE, speed));
-//        
-//        //add TheInverter
-        imagePath = "images/tr.png";
-        speed = 9;
-        track.addCharacter(new TheInverter(JFrame.MAXIMIZED_HORIZ +190, 150, 250, 120, 
-                imagePath, Color.WHITE, speed));
-//        
-//        //add TheTurtle
-        imagePath = "images/turtle.png";
-        speed = 2;
-        track.addCharacter(new TheTurtle(JFrame.MAXIMIZED_HORIZ +600, 450, 200, 150, 
-                imagePath, Color.WHITE, speed));
-//        
-//        //add TheTinker
-        imagePath = "images/tk.png";
-        speed = 3;
-        track.addCharacter(new TheTinker(JFrame.MAXIMIZED_HORIZ +200, 650, 200, 150, 
-                imagePath, Color.WHITE, speed));
-//        
-//         //add TheGhost
-        imagePath = "images/shifter.png";
-        speed = 8;
-        track.addCharacter(new TheGhost(JFrame.MAXIMIZED_HORIZ +10, 100, 200, 110, 
-                imagePath, Color.WHITE, speed));
+        for(int i=0 ;i < track.getCharacters().size(); i++){
+            character=track.getCharacters().get(i);
+            character.setX(1800);
+            character.setY(y-=100);
+            character.setSpeed(speed[i]);
+        }
+    }
+    
+    private static void createCharacters(RaceTrack track) {
+    //-------------- add character ------------//
+        track.addCharacter(new TheTeleporter(JFrame.MAXIMIZED_HORIZ+1800, 900, 50, 30, imagePath[0], Color.BLUE, speed[0]));
+        track.addCharacter(new TheSpeedster(JFrame.MAXIMIZED_HORIZ+1800, 800, 50, 30, imagePath[1], Color.WHITE, speed[1]));
+        track.addCharacter(new TheHulk(JFrame.MAXIMIZED_HORIZ+1800, 700, 50, 30, imagePath[2], Color.WHITE, speed[2]));
+        track.addCharacter(new TheFlash(JFrame.MAXIMIZED_HORIZ+1800, 600, 50, 30, imagePath[3], Color.WHITE, speed[3]));
+        track.addCharacter(new TheFreezer(JFrame.MAXIMIZED_HORIZ+1800, 500, 50, 30, imagePath[4], Color.WHITE, speed[4]));
+        track.addCharacter(new TheRocket(JFrame.MAXIMIZED_HORIZ+1800, 400, 50, 30, imagePath[5], Color.WHITE, speed[5]));
+        track.addCharacter(new TheInverter(JFrame.MAXIMIZED_HORIZ+1800 , 300, 50, 30, imagePath[6], Color.WHITE, speed[6]));
+        track.addCharacter(new TheShield(JFrame.MAXIMIZED_HORIZ+1800 , 200, 50, 30, imagePath[7], Color.WHITE, speed[7]));//fdsafsafds
+        track.addCharacter(new TheTopler(JFrame.MAXIMIZED_HORIZ+1800 , 100, 50, 30, imagePath[8], Color.WHITE, speed[8]));//dfsadsfdsfds
+        track.addCharacter(new TheGhost(JFrame.MAXIMIZED_HORIZ+1800, 0, 0, 30, imagePath[9], Color.WHITE, speed[9]));
     }
 }

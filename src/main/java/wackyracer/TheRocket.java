@@ -5,8 +5,11 @@ import javax.swing.JFrame;
 
 public class TheRocket extends WackyCharacter implements SpecialPower{
     
+    public String name="Rocket";
+    
     public TheRocket(int x, int y, int width, int height, String imagePath, Color characterColor, int speed) {
         super(x, y, width, height, imagePath, characterColor, speed);
+        super.setName(name);
     }
     
       @Override
@@ -17,12 +20,13 @@ public class TheRocket extends WackyCharacter implements SpecialPower{
 
         // Check if new Y coordinate is within the bounds of the track
         if (newY < 0) {
-            newY = 700;
-        } else if (newY + getHeight() > 800) {
-            newY = 600 - getHeight();
+            newY = 0;
+        } else if (newY + getHeight() > 1000) {
+            newY = 900;
         }
         // Set the new Y coordinate
         setY(newY);
+        setX(getX()-getSpeed());
     }
     
     @Override

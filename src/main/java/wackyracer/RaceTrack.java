@@ -5,10 +5,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class RaceTrack extends JPanel implements Runnable {
     private final List<WackyCharacter> characters;
-    private Thread thread;
+    public Thread thread;
 
     public RaceTrack() {
         setBackground(Color.WHITE);
@@ -17,6 +19,10 @@ public class RaceTrack extends JPanel implements Runnable {
 
     public void addCharacter(WackyCharacter character) {
         characters.add(character);
+    }
+    
+    public List<WackyCharacter> getCharacters(){
+        return characters;
     }
 
     @Override
@@ -36,8 +42,10 @@ public class RaceTrack extends JPanel implements Runnable {
             for (WackyCharacter character : characters) {
                 character.move();
                 // Stop the character at the edge of the screen
-                if (character.getX() + character.getWidth() < 0) {
-                    character.setX(getWidth());
+                if (character.getX() < 0) {
+                    String message=character.getName()+" win!!!";
+                    JOptionPane.showMessageDialog(null, message,"Game Over",JOptionPane.INFORMATION_MESSAGE);
+                    thread.stop();
                 }
             }
             repaint();

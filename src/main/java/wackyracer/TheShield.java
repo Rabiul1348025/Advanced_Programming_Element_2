@@ -6,12 +6,15 @@ import javax.swing.JFrame;
 
 public class TheShield extends WackyCharacter implements SpecialPower {
 
+    
+    public String name="Shield";
     private boolean isHopping = false;
     private int hopHeight = 50;
     private int hopCounter = 0;
 
     public TheShield(int x, int y, int width, int height, String imagePath, Color characterColor, int speed) {
         super(x, y, width, height, imagePath, characterColor, speed);
+        super.setName(name);
     }
 
     @Override
@@ -31,11 +34,13 @@ public class TheShield extends WackyCharacter implements SpecialPower {
         // Check if new Y coordinate is within the bounds of the track
         if (newY < 0) {
             newY = 0;
-        } else if (newY + getHeight() > JFrame.MAXIMIZED_VERT) {
-            newY = JFrame.MAXIMIZED_VERT - getHeight();
+        } else if (newY + getHeight() > 1000) {
+            newY = 1000;
         }
         // Set the new Y coordinate
         setY(newY);
+        
+        setX(getX()-getSpeed());
     }
 
     @Override
