@@ -11,8 +11,10 @@ import
 
 import java.awt.Color;
 
-import 
+import
         java.awt.event.ActionEvent;
+import 
+        javax.swing.JOptionPane;
 
 public class WackyRacer {
     
@@ -44,7 +46,7 @@ public class WackyRacer {
     8//----------------  Ghost -------------------------//10
     };
     
-    public static void main(String args[]){
+    public static void main(String args[]) throws InterruptedException{
         
     JFrame frame = new JFrame("Wacky Racer Game");
     //-------- Set the size of the frame to fullscreen ----------//
@@ -76,10 +78,18 @@ public class WackyRacer {
     
     stopButton.addActionListener((ActionEvent e) -> {
         track.stopRace();
-        initPlayers(track);
-        
-        startButton.setVisible(true);
-        stopButton.setEnabled(false);
+        int flag = JOptionPane.showConfirmDialog(null, "Are you sure you want to stop the race?",
+                "Stop the game", JOptionPane.YES_NO_OPTION);
+
+        if (flag == JOptionPane.YES_OPTION) {
+            InitRace(track);
+            startButton.setVisible(true);
+            stopButton.setEnabled(false);
+        }
+        else
+        {
+            track.startRace();
+        }
     });
     
     frame.
@@ -89,13 +99,15 @@ public class WackyRacer {
             add(stopButton, 
             BorderLayout.SOUTH);
     
-    frame.add(track);
+    frame.
+            add(track);
 
     frame.
             setVisible(true);
 }
-
-    private static void initPlayers(RaceTrack track){
+    
+    public static void InitRace(RaceTrack track)
+    {
         WackyCharacter character;
         int y=1000;
         
@@ -106,7 +118,7 @@ public class WackyRacer {
             character.setSpeed(speed[i]);
         }
     }
-    
+
     private static void createCharacters(RaceTrack track) {
     //-------------- add character ------------//
         track.addCharacter(new TheTeleporter(JFrame.MAXIMIZED_HORIZ+1800, 900, 50, 30, imagePath[0], Color.BLUE, speed[0]));
